@@ -1,0 +1,88 @@
+
+.gb-container {
+	height: 100%;
+	background: green;
+	width: 100%; /* same width as gb-scrollX */
+	border: none;
+	overflow-x: hidden; 
+	overflow-y: hidden;
+}
+
+.gb-scrollX {
+	position: absolute;
+	top: 0px;
+	height: 20px;
+	background: purple;
+	width: 994px; /* needs to be set via JS */
+	border: none;
+	overflow-x: scroll; 
+	overflow-y: hidden;
+}
+
+.gb-scrollY {
+	position: absolute;
+	left: 0px;
+	height: 800px; /* needs to be set via JS - height of container */
+	background: purple;
+	width: 20px; 
+	border: none;
+	overflow-x: hidden; 
+	overflow-y: scroll;
+}
+
+
+.divX {
+	width:2000px; 
+	height: 20px; 
+	}
+.divY {
+	width:20px; 
+	height: 800px; /* set by figuring out the height of the contents */
+}
+
+.gb-row {
+	height: 70px;
+	border: 2px black solid;
+	background: red;
+	margin-bottom: 10px;
+	overflow: auto;
+    width: 2000px; /* same as divX width */ 
+    
+}
+
+.gb-col {
+	width: 70px;
+	height: 2000px;
+	border: 2px black solid;
+	background: red;
+	margin-bottom:10px;
+	margin-right:10px;
+	overflow-y: auto;
+	vertical-align: 0px;
+	display: inline-block;
+}
+
+.gb-col-item {
+	width: 30px;
+	height: 30px;
+	border: 0px black solid;
+	background: orange;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 0px;
+	
+}
+
+.gb-row-item {
+	width: 60px;
+	height: 30px;
+	border: 0px black solid;
+	background: orange;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 0px;
+	display: inline-block; 
+	margin-top: 5px;
+}

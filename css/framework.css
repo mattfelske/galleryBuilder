@@ -1,0 +1,19 @@
+body {
+	background: lightgray;
+}
+
+.page {
+	margin: 100px auto 0px auto;
+	padding: 10px 10px 10px 10px;
+	width: 50%;
+	border: 2px black solid;
+	overflow: hidden;
+	background: gray;
+	white-space: nowrap;
+}
+
+.graphicsPanel {
+	border: 0px blue solid;
+	width: 400px;
+	height: 400px;
+}
