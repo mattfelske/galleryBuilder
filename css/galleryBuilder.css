@@ -6,23 +6,23 @@
 	border: none;
 	overflow-x: hidden; 
 	overflow-y: hidden;
+	position: relative;
 }
 
 .gb-scrollX {
-	position: absolute;
+	position: relative;
 	top: 0px;
 	height: 20px;
 	background: purple;
-	width: 994px; /* needs to be set via JS */
 	border: none;
 	overflow-x: scroll; 
 	overflow-y: hidden;
 }
 
 .gb-scrollY {
-	position: absolute;
+	position: relative;
 	left: 0px;
-	height: 800px; /* needs to be set via JS - height of container */
+	top: 0px;
 	background: purple;
 	width: 20px; 
 	border: none;
@@ -32,27 +32,21 @@
 
 
 .divX {
-	width:2000px; 
 	height: 20px; 
 	}
 .divY {
 	width:20px; 
-	height: 800px; /* set by figuring out the height of the contents */
 }
 
 .gb-row {
-	height: 70px;
 	border: 2px black solid;
 	background: red;
 	margin-bottom: 10px;
 	overflow: auto;
-    width: 2000px; /* same as divX width */ 
     
 }
 
 .gb-col {
-	width: 70px;
-	height: 2000px;
 	border: 2px black solid;
 	background: red;
 	margin-bottom:10px;
@@ -63,8 +57,6 @@
 }
 
 .gb-col-item {
-	width: 30px;
-	height: 30px;
 	border: 0px black solid;
 	background: orange;
 	margin-left: auto;
@@ -76,8 +68,6 @@
 }
 
 .gb-row-item {
-	width: 60px;
-	height: 30px;
 	border: 0px black solid;
 	background: orange;
 	margin-left: 5px;
