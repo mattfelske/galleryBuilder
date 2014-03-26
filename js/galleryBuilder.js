@@ -15,7 +15,7 @@
  * 		myApp.initializeApp(id, scrollAlignment, numPerBucket, bWidth, bHeight);
  * 
  * @author Matt Felske
- * @version 1.0
+ * @version 0.0.2
  */
 
 function GalleryBuilder() {
@@ -23,7 +23,11 @@ function GalleryBuilder() {
 	var SCROLL_HORIZONTAL = 0;
 	var SCROLL_VERTICAL = 1;
 	
+	var STRING_TYPE = 0;
+	var IMAGE_TYPE = 1;
+	
 	/**** USER SUBMITTED *********************************/
+	var elementType = STRING_TYPE;
 	var scrollAlignment = SCROLL_HORIZONTAL;
 	var numberPerBuckets = 5;
 	var bucketElementWidth = 30;
@@ -34,7 +38,7 @@ function GalleryBuilder() {
 	var bucketElementMarginLeft = 15;
 	/*****************************************************/
 	
-	var data = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
+	var data;
 	var buckets = new Array();
 	
 	var gbContainer;
@@ -43,8 +47,10 @@ function GalleryBuilder() {
 	var windowOffsetWidth;
 	var windowOffsetHeight;
 	
+	
 	this.initializeApp=initializeApp;
 	this.setMargins=setMargins;
+	this.setData=setData;
 	
 	
 	function initializeApp(containerID, scrollAlign, numBucket, bWidth, bHeight) {
@@ -61,11 +67,8 @@ function GalleryBuilder() {
 		numberPerBuckets = numBucket;
 		bucketElementWidth = bWidth;
 		bucketElementHeight = bHeight;
-			
-		
-		
-		
 	    
+		
 	    buildBuckets()
 	    buildGallery(gbContainer);
 	    
@@ -93,10 +96,11 @@ function GalleryBuilder() {
 		bucketElementMarginLeft = left;
 	}
 	
+	function setData(type, dataInfo) {
+		elementType = type;
+		data = dataInfo;
+	} 
 	
-	
-	
-	//initializeApp();
 	
 	function buildBuckets() {
 		for(var i=0; i<data.length; i=i+numberPerBuckets) {
@@ -228,15 +232,21 @@ function GalleryBuilder() {
 		node.setAttributeNode(att3);
 		
 		for(var i=0; i< numArray.length; i++) {
-			generateItem(node, numArray[i]);
+			generateItem(node, numArray[i], (pos * numberPerBuckets) + i);
 		}
 		parent.appendChild(node);
 	}
 	
-	function generateItem(parent, num) {
+	function generateItem(parent, val, pos) {
 		var node = document.createElement("DIV");
-		var textNode = document.createTextNode("M-"+num+"-F");
-		node.appendChild(textNode);
+		
+		if(elementType == STRING_TYPE) {
+			generateStringItem(node, val);
+		} else if(elementType == IMAGE_TYPE) {
+			generateImageItem(node, val, pos);
+		} else {
+			console.log("Unknown Element Type");
+		}
 		
 		var att=document.createAttribute("class");
 		var att2 = document.createAttribute("style");
@@ -252,11 +262,51 @@ function GalleryBuilder() {
 		
 		parent.appendChild(node);
 	}
+	
+	function generateStringItem(parent, val) {
+		var textNode = document.createTextNode(val);
+		parent.appendChild(textNode);
+	}
+	
+	function generateImageItem(parent, val, valPos) {
+		var linkNode = document.createElement("A");
+		var imgNode = document.createElement("IMG");
+		
+		var attREF = document.createAttribute("href");
+		var attID = document.createAttribute("id");
+		attREF.value = "" + val;
+		attID.value = "gb-element-" + valPos;
+		linkNode.setAttributeNode(attREF);
+		linkNode.setAttributeNode(attID);
+		
+		linkNode.appendChild(imgNode);
+		
+		var attSRC = document.createAttribute("src");
+		attSRC.value = "" + val;
+		imgNode.setAttributeNode(attSRC);
+		
+		var attWidth = document.createAttribute("width");
+		attWidth.value = bucketElementWidth;
+		imgNode.setAttributeNode(attWidth);
+		
+		var attHeight = document.createAttribute("height");
+		attHeight.value = bucketElementHeight;
+		imgNode.setAttributeNode(attHeight);
+		
+		var attAlt = document.createAttribute("alt");
+		attAlt.value = "alt " + val;
+		imgNode.setAttributeNode(attAlt);
+		
+		parent.appendChild(linkNode);
+	}
 
 
 }
 
+var myData = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
+
 myApp=new GalleryBuilder();
+myApp.setData(1,myData);
 myApp.setMargins(10, 25, 10, 25);
 myApp.initializeApp("myContainer", 0, 4, 70, 80);
 
