@@ -12,20 +12,62 @@
  * 		Pass in the ID of the container that the gallery will be located in.
  * 
  * 		myApp=new galleryBuilder();
- * 		myApp.initializeApp();
+ * 		myApp.initializeApp(id, scrollAlignment, numPerBucket, bWidth, bHeight);
  * 
  * @author Matt Felske
  * @version 1.0
  */
 
-function galleryBuilder(containerID) {
+function GalleryBuilder() {
 
+	var SCROLL_HORIZONTAL = 0;
+	var SCROLL_VERTICAL = 1;
+	
+	/**** USER SUBMITTED *********************************/
+	var scrollAlignment = SCROLL_HORIZONTAL;
+	var numberPerBuckets = 5;
+	var bucketElementWidth = 30;
+	var bucketElementHeight = 30;
+	var bucketElementMarginTop = 10;
+	var bucketElementMarginRight = 15;
+	var bucketElementMarginBottom = 10;
+	var bucketElementMarginLeft = 15;
+	/*****************************************************/
+	
+	var data = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
+	var buckets = new Array();
+	
+	var gbContainer;
+	var surfaceWidth;
+	var surfaceHeight;
+	var windowOffsetWidth;
+	var windowOffsetHeight;
+	
 	this.initializeApp=initializeApp;
-	function initializeApp(id) {
+	this.setMargins=setMargins;
+	
+	
+	function initializeApp(containerID, scrollAlign, numBucket, bWidth, bHeight) {
 		console.log("Initializing ...");
+		
+		gbContainer = document.getElementById(containerID);
+		surfaceWidth = gbContainer.offsetWidth;
+		surfaceHeight = gbContainer.offsetHeight;
+		windowOffsetWidth = gbContainer.offsetLeft;
+		windowOffsetHeight = gbContainer.offsetTop;
+		if(scrollAlign == SCROLL_HORIZONTAL || scrollAlign == SCROLL_VERTICAL) {
+			scrollAlignment = scrollAlign;
+		}
+		numberPerBuckets = numBucket;
+		bucketElementWidth = bWidth;
+		bucketElementHeight = bHeight;
+			
+		
+		
+		
 	    
 	    buildBuckets()
-	    buildGallery(containerID);
+	    buildGallery(gbContainer);
 	    
 	    var axisY = document.getElementById("axisY");
 	    var axisX = document.getElementById("axisX");
@@ -44,30 +86,15 @@ function galleryBuilder(containerID) {
 	    }
 	}
 	
+	function setMargins(top, right, bottom, left) {
+		bucketElementMarginTop = top;
+		bucketElementMarginRight = right;
+		bucketElementMarginBottom = bottom;
+		bucketElementMarginLeft = left;
+	}
 	
-	var SCROLL_HORIZONTAL = 0;
-	var SCROLL_VERTICAL = 1;
 	
-	/**** USER SUBMITTED *********************************/
-	var scrollAlignment = SCROLL_HORIZONTAL;
-	var numberPerBuckets = 5;
-	var bucketElementWidth = 42;
-	var bucketElementHeight = 62;
-	var bucketElementMarginTop = 10;
-	var bucketElementMarginRight = 15;
-	var bucketElementMarginBottom = 10;
-	var bucketElementMarginLeft = 15;
-	/*****************************************************/
 	
-	var data = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
-	var buckets = new Array();
-	
-	var gbContainer = document.getElementById(containerID);
-	
-	var surfaceWidth = document.getElementById(containerID).offsetWidth;
-	var surfaceHeight = document.getElementById(containerID).offsetHeight;
-	var windowOffsetWidth = document.getElementById(containerID).offsetLeft;
-	var windowOffsetHeight = document.getElementById(containerID).offsetTop;
 	
 	//initializeApp();
 	
@@ -78,7 +105,7 @@ function galleryBuilder(containerID) {
 		}
 	}
 	
-	function buildGallery(containerID){
+	function buildGallery(parent){
 		
 		
 		var galleryNode = document.createElement("DIV");
@@ -112,7 +139,7 @@ function galleryBuilder(containerID) {
 			generateBucket(galleryNode, buckets[i], i, sumWidth, sumHeight);
 		}
 		
-		gbContainer.appendChild(galleryNode);
+		parent.appendChild(galleryNode);
 		
 		
 		var sum = 0;
@@ -137,7 +164,7 @@ function galleryBuilder(containerID) {
 			sum = (elementHeight * buckets.length) + ((buckets.length - 1) * elementMarginBottom) + elementMarginBottom;
 		}	
 		
-		generateScrollbars(gbContainer, sum);
+		generateScrollbars(parent, sum);
 		
 	}
 	
@@ -229,8 +256,9 @@ function galleryBuilder(containerID) {
 
 }
 
-/*myApp=new galleryBuilder();
-myApp.initializeApp();*/
+myApp=new GalleryBuilder();
+myApp.setMargins(10, 25, 10, 25);
+myApp.initializeApp("myContainer", 0, 4, 70, 80);
 
 
 
