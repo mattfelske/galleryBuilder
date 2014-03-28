@@ -77,6 +77,49 @@
 	margin-top: 5px;
 }
 
+/** Slide to Unlock ******************************************/
+
+#well {
+	
+	margin-left: 10px;
+	background: #f0f0f0;
+	-webkit-appearance: none;
+	transition: opacity 0.5s;
+	position: relative;
+	outline: none !important;
+	
+	overflow: hidden; 
+	
+	-webkit-user-select: none;
+}
+
+h2.slider {
+	
+	font-size: 20px;
+	color: #8a8a8a;
+	padding: 0;
+	margin:0;
+	width: 400px;
+	-webkit-text-size-adjust: none;
+	background:#6F3;
+}
+#slider {
+
+	width: 63px;
+	height: 55px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+@-webkit-keyframes slidetounlock {
+	0% {
+		background-position: -95% 0;
+	}
+	100%{
+		background-position: 95% 0;
+	}
+}
+
 /*::-webkit-scrollbar {
     width: 12px;
 }*/

@@ -17,6 +17,8 @@
  * @author Matt Felske
  * @version 0.0.2
  */
+ 
+ var sumGlobal;
 
 function GalleryBuilder() {
 
@@ -72,9 +74,14 @@ function GalleryBuilder() {
 	    buildBuckets()
 	    buildGallery(gbContainer);
 	    
+		
+		/**********************************************************************
+		Attches scroll bar to content
+		**********************************************************************/
 	    var axisY = document.getElementById("axisY");
 	    var axisX = document.getElementById("axisX");
 	    var gbContainer = document.getElementById("gb-container");
+		
 	    if(axisY != null) {
 	    	axisY.onscroll = function (event) {
 	    		//console.log("scroll event detected! " + axisY.scrollTop);
@@ -87,6 +94,8 @@ function GalleryBuilder() {
 	    		gbContainer.scrollLeft = axisX.scrollLeft;
 	    	}
 	    }
+		/**********************************************************************/
+		
 	}
 	
 	function setMargins(top, right, bottom, left) {
@@ -156,6 +165,8 @@ function GalleryBuilder() {
 			var elementMarginRight = parseInt(style.marginRight);
 			sum = (elementWidth * buckets.length) + ((buckets.length - 1) * elementMarginRight) + elementMarginRight;
 			
+			sumGlobal = sum;
+			
 			/* Element Manipulation */
 	
 		} else {
@@ -171,6 +182,10 @@ function GalleryBuilder() {
 		generateScrollbars(parent, sum);
 		
 	}
+	
+	//********************************************************************************************************************************
+	//sum is the size of the scrollable content
+	//parent is the container of the  buckets and scrollbar (gbcontainer in this example)
 	
 	function generateScrollbars(parent, sum) {
 		
@@ -210,6 +225,43 @@ function GalleryBuilder() {
 		
 		parent.appendChild(node);
 	}
+	
+	/** unlock slider code ********************************/
+	$(function() {
+	
+		$("#slider").draggable({
+			axis: 'x',
+			containment: 'parent',
+			drag: function(event, ui) {
+				
+				//var scrollNumber = (ui.position.left * sumGlobal) / 337;
+				var scrollNumber = (ui.position.left * (sumGlobal-400)) / 337;	
+				
+				console.log("math ugh : " + ui.position.left + "*" + sumGlobal + "/ 400 = " + scrollNumber);
+				
+				document.getElementById('gb-container').scrollLeft = scrollNumber;
+				
+				/*
+				if (ui.position.left > 200) {
+					console.log("200 boom");
+				} else {
+					// Apparently Safari isn't allowing partial opacity on text with background clip? Not sure.
+					// $("h2 span").css("opacity", 100 - (ui.position.left / 5))
+				}*/
+			},
+			stop: function(event, ui) {
+				if (ui.position.left < 200) {
+					$(this).animate({
+						left: 0
+					})
+				}
+			}
+		});
+		
+	});
+
+	
+	//**************************************************************************************************************************
 	
 	function generateBucket(parent, numArray, pos, bucketWidth, bucketHeight) {
 		
